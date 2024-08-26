@@ -3,6 +3,9 @@ from django.contrib.auth.admin import UserAdmin
 
 from backend.models import User, Shop, Category, Product, ProductInfo, Parameter, ProductParameter, Order, OrderItem, \
     Contact, ConfirmEmailToken
+from django.contrib import admin
+from .models import Category, Parameter, ProductParameter, Product, Shop
+from .tasks import do_import
 
 
 @admin.register(User)
@@ -71,3 +74,22 @@ class ContactAdmin(admin.ModelAdmin):
 @admin.register(ConfirmEmailToken)
 class ConfirmEmailTokenAdmin(admin.ModelAdmin):
     list_display = ('user', 'key', 'created_at',)
+
+
+class CustomAdmin(admin.ModelAdmin):
+    actions = ['run_import_task']
+
+    def run_import_task(self, request, queryset):
+        for obj in queryset:
+            backend = obj.backend  # Assuming 'backend' is a field in your model
+            do_import.delay(backend)
+        self.message_user(request, "Import task has been scheduled for selected objects.")
+
+    run_import_task.short_description = "Run import task"
+
+# admin.site.register(Category, CustomAdmin)
+# admin.site.register(Parameter, CustomAdmin)
+# admin.site.register(ProductParameter, CustomAdmin)
+# admin.site.register(Product, CustomAdmin)
+# admin.site.register(Shop, CustomAdmin)
+
