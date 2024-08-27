@@ -1,26 +1,22 @@
-# For more information, please refer to https://aka.ms/vscode-docker-python
+# Используем официальный образ Python в качестве базового образа
 FROM python:3
-
 EXPOSE 8000
-
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
-
-# Turns off buffering for easier container logging
+# # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
-
-# Install pip requirements
-COPY requirements.txt .
+# Копируем файл requirements.txt внутрь контейнера
+COPY requirements.txt ./
+# Устанавливаем зависимости, описанные в файле requirements.txt
 RUN python -m pip install -r requirements.txt
+# Устанавливаем рабочую директорию внутри контейнера
+WORKDIR /home/app
 
-WORKDIR /app
-COPY . /app
+COPY requirements.txt /home/app/
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Creates a non-root user with an explicit UID and adds permission to access the /app folder
-# For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
-# RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
-# USER appuser
+COPY . /home/app/
 
-# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-# File wsgi.py was not found. Please enter the Python path to wsgi file.
-#CMD ["gunicorn", "--bind", "0.0.0.0:8000", "pythonPath.to.wsgi"]
+RUN python manage.py collectstatic --noinput
+
+

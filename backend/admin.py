@@ -81,7 +81,7 @@ class CustomAdmin(admin.ModelAdmin):
 
     def run_import_task(self, request, queryset):
         for obj in queryset:
-            backend = obj.backend  # Assuming 'backend' is a field in your model
+            backend = obj.parameters
             do_import.delay(backend)
         self.message_user(request, "Import task has been scheduled for selected objects.")
 
@@ -92,4 +92,3 @@ class CustomAdmin(admin.ModelAdmin):
 # admin.site.register(ProductParameter, CustomAdmin)
 # admin.site.register(Product, CustomAdmin)
 # admin.site.register(Shop, CustomAdmin)
-

@@ -1,0 +1,45 @@
+version: '3.4'
+
+services:
+  web:
+      # Сборка образа для сервиса django из текущей директории
+       build:
+      # Задание имени контейнера для сервиса django
+            context: ./
+            dockerfile: Dockerfile
+       # Задание команды, которую нужно запустить при запуске контейнера для сервиса web
+       command: gunicorn netology_pd_diplom.wsgi:application --bind 0.0.0.0:8000
+       #command: /bin/sh -c "entrypoint.sh"
+       volumes:
+        - .:/home/app
+
+       # Открытие порта на хостовой машине и перенаправление на порт в контейнере
+       expose:
+          - 8000
+      # Зависимость от другого сервиса по очередности запуска
+       depends_on:
+         - db
+  db:
+    # Использование готового образа postgres
+    image: postgres:15
+    # Задание переменных окружения для контейнера с postgres
+    environment:
+      - POSTGRES_DB=db_diplom_1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=as798360
+      # Задание имени контейнера для сервиса pgdb
+    container_name: db
+    # Связывание тома с директорией в контейнере для сохранения данных postgres
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
+  nginx:
+    build: ./nginx
+    volumes:
+      - staticfiles:/home/app/staticfiles
+    ports:
+        - 1337:80
+    depends_on:
+        - web
+volumes:
+  pgdbdata: null
+  staticfiles:
