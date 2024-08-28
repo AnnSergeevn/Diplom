@@ -1,9 +1,10 @@
 import yaml
-from .models import Category, Parameter, ProductParameter, Product, Shop
+from .models import Category, Parameter, ProductParameter, Product, Shop, ProductInfo
 from celery import shared_task
 from .signals import password_reset_token_created
 from netology_pd_diplom.celery import app
-
+from requests import get
+from yaml import load as load_yaml, Loader
 
 @shared_task
 def send_email(sender, instance, reset_password_token, **kwargs):
@@ -11,45 +12,29 @@ def send_email(sender, instance, reset_password_token, **kwargs):
     return password_reset_token_created(sender, instance, reset_password_token, **kwargs)
 
 
-def open_file(shop):
-    with open(shop.get_file(), 'r') as f:
-        data = yaml.safe_load(f)
-    return data
-
 
 @app.task
-def do_import(data, user_id):
-    file = open_file(data)
+def do_import(url, user_id):
+    stream = get(url).content
+    data = load_yaml(stream, Loader=Loader)
+    shop, _ = Shop.objects.get_or_create(name=data['shop'], user_id=request.user.id)
+    for category in data['categories']:
+        category_object, _ = Category.objects.get_or_create(id=category['id'], name=category['name'])
+        category_object.shops.add(shop.id)
+        category_object.save()
+    ProductInfo.objects.filter(shop_id=shop.id).delete()
+    for item in data['goods']:
+        product, _ = Product.objects.get_or_create(name=item['name'], category_id=item['category'])
 
-    shop, _ = Shop.objects.get_or_create(user_id=user_id,
-                                         defaults={'name': file['shop']})
-
-    load_cat = [
-        Category(id=category['id'], name=category['name']) for category in file['categories']
-    ]
-    Category.objects.bulk_create(load_cat)
-
-    Product.objects.filter(shop_id=shop.id).delete()
-
-    load_prod = []
-    product_id = {}
-    load_pp = []
-    for item in file['goods']:
-        load_prod.append(Product(name=item['name'],
-                                 category_id=item['category'],
-                                 model=item['model'],
-                                 external_id=item['id'],
-                                 shop_id=shop.id,
-                                 quantity=item['quantity'],
-                                 price=item['price'],
-                                 price_rrc=item['price_rrc']))
-        product_id[item['id']] = {}
-
+        product_info = ProductInfo.objects.create(product_id=product.id,
+                                                  external_id=item['id'],
+                                                  model=item['model'],
+                                                  price=item['price'],
+                                                  price_rrc=item['price_rrc'],
+                                                  quantity=item['quantity'],
+                                                  shop_id=shop.id)
         for name, value in item['parameters'].items():
-            parameter, _ = Parameter.objects.get_or_create(name=name)
-            product_id[item['id']].update({parameter.id: value})
-            load_pp.append(ProductParameter(product_id=product_id[item['id']][parameter.id],
-                                            parameter_id=parameter.id,
-                                            value=value))
-    Product.objects.bulk_create(load_prod)
-    ProductParameter.objects.bulk_create(load_pp)
+            parameter_object, _ = Parameter.objects.get_or_create(name=name)
+            ProductParameter.objects.create(product_info_id=product_info.id,
+                                            parameter_id=parameter_object.id,
+                                            value=value)

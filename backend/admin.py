@@ -70,25 +70,3 @@ class OrderItemAdmin(admin.ModelAdmin):
 class ContactAdmin(admin.ModelAdmin):
     pass
 
-
-@admin.register(ConfirmEmailToken)
-class ConfirmEmailTokenAdmin(admin.ModelAdmin):
-    list_display = ('user', 'key', 'created_at',)
-
-
-class CustomAdmin(admin.ModelAdmin):
-    actions = ['run_import_task']
-
-    def run_import_task(self, request, queryset):
-        for obj in queryset:
-            backend = obj.parameters
-            do_import.delay(backend)
-        self.message_user(request, "Import task has been scheduled for selected objects.")
-
-    run_import_task.short_description = "Run import task"
-
-# admin.site.register(Category, CustomAdmin)
-# admin.site.register(Parameter, CustomAdmin)
-# admin.site.register(ProductParameter, CustomAdmin)
-# admin.site.register(Product, CustomAdmin)
-# admin.site.register(Shop, CustomAdmin)
