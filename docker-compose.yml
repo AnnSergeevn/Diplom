@@ -3,55 +3,51 @@ version: '3.4'
 services:
   web:
       # Сборка образа для сервиса django из текущей директории
-       build:
+       build: .
       # Задание имени контейнера для сервиса django
-            context: ./
-            dockerfile: Dockerfile
+       container_name: django
        # Задание команды, которую нужно запустить при запуске контейнера для сервиса web
        command: gunicorn netology_pd_diplom.wsgi:application --bind 0.0.0.0:8000
-       #command: /bin/sh -c "entrypoint.sh"
        volumes:
-        - .:/home/app
-
+          - .:/usr/src/app
+      #  volumes:
+      #      - static_volume:/usr/src/app/staticfiles
        # Открытие порта на хостовой машине и перенаправление на порт в контейнере
        expose:
-          - 8000
+        - 8000
       # Зависимость от другого сервиса по очередности запуска
        depends_on:
-         - db
-  db:
+         - pgdb
+  pgdb:
     # Использование готового образа postgres
     image: postgres:15
     # Задание переменных окружения для контейнера с postgres
     environment:
-      - POSTGRES_DB=db_diplom_1
+      - POSTGRES_DB=netology_stocks_products
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=as798360
       # Задание имени контейнера для сервиса pgdb
-    container_name: db
+    container_name: pgdb
     # Связывание тома с директорией в контейнере для сохранения данных postgres
     volumes:
       - pgdbdata:/var/lib/postgresql/data/
   nginx:
     build: ./nginx
     volumes:
-      - ./staticfiles:/home/app/staticfiles
+          - ./staticfiles:/usr/src/app/staticfiles
     ports:
-        - 1337:80
+      - 1337:80
     depends_on:
-        - web
+      - web
   redis:
     image: redis:latest
     restart: always
     ports:
-      - "6379:6380"
+        - "6379:6380"
     volumes:
-      - ./data:/root/redis
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+        - ./data:/root/redis
+        - ./redis.conf:/usr/local/etc/redis/redis.conf
 
-    
-    
-    
 volumes:
   pgdbdata: null
   staticfiles:

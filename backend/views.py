@@ -28,6 +28,7 @@ from backend.serializers import UserSerializer, CategorySerializer, ShopSerializ
 from backend.signals import new_user_registered, new_order
 
 
+
 class RegisterAccount(APIView):
     """
     Для регистрации покупателей
