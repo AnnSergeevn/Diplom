@@ -50,7 +50,7 @@ services:
         - ./redis.conf:/usr/local/etc/redis/redis.conf
   celery:
     build: .
-    command: celery -A netologe_pd_diplom.celery worker -l info
+    command: celery -A netology_pd_diplom.celery worker -l info
     volumes:
       - .:/code
     depends_on:

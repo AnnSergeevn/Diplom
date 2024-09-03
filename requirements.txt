@@ -10,3 +10,4 @@ pyyaml~=6.0.0
 gunicorn
 django_rest_passwordreset
 django-celery
+Redis~=4.5.2
