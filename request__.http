@@ -1,0 +1,215 @@
+POST http://localhost:1337/api/v1/user/register 
+Content-Type: application/json
+
+{
+   "first_name": "Aleks_3",
+   "last_name": "Star",
+   "email": "Alekssssdd@mail.ru",
+   "password": "5aaaaaaaa",
+   "company": "apple",
+   "position": "shop",
+   "type":"shop",
+   "is_active": "True"
+}
+
+###
+
+POST http://127.0.0.1:1337/api/v1/user/login
+Content-Type: application/json
+
+{
+   "email":"Alekssss@mail.ru",
+   "password": "5aaaaaaaa"
+}
+
+
+
+###
+
+POST http://127.0.0.1:8000/api/v1/user/register/confirm
+Content-Type: application/json
+
+{
+   "email": "Elena.88@mail.ru",
+   "token": "0aa5de7e344e7abf0ba6361b8e743692bc0bff627a4"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/v1/user/details
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+
+###
+
+POST http://127.0.0.1:8000/api/v1/user/details
+Content-Type: application/json
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+{  
+   "first_name": "Elll",
+   "last_name": "Koll",
+   "email": "Elena.88@mail.ru",
+   "password": "3aaaaaaaa",
+   "company": "apple",
+   "position": "buyer"  
+}
+
+###
+
+GET http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+###
+
+POST http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Content-Type: application/json
+
+{
+   "city": "M",
+   "street": "Lesnaji",
+   "phone": "87675454"
+}
+
+###
+
+DELETE http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Content-Type: application/json
+
+{
+   "items": "1"
+}
+
+
+###
+
+PUT http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Content-Type: application/json
+
+{
+   "id": "1",
+   "city": "Samara"
+}
+
+###
+
+POST http://127.0.0.1:8000/api/v1/user/password_reset HTTP/1.1
+Content-Type: application/json
+
+{
+   "email":"elena.88@mail.ru"
+}
+
+###
+
+###
+
+POST http://127.0.0.1:8000/api/v1/user/password_reset/confirm
+Content-Type: application/json
+
+{
+   "email":"elena.88@mail.ru",
+   "password":"2aaaaaaaa3",
+   "token":"42c33f2a99fdf1dd7d5a544d424c97b0caa16c06"
+}
+
+###
+
+
+POST http://127.0.0.1:8000/api/v1/partner/update
+Authorization: Token c98912e260c13ae1ff9de8997685ae64a8ec14bf
+Content-Type: application/json
+
+{
+   "url": "https://raw.githubusercontent.com/AnnSergeevn/python-final-diplom/master/data/shop1.yaml"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/v1/categories
+
+###
+
+GET http://127.0.0.1:8000/api/v1/shops
+
+###
+
+GET http://127.0.0.1:8000/api/v1/products HTTP/1.1
+Content-Type: application/json
+
+###
+
+GET http://127.0.0.1:8000/api/v1/basket HTTP/1.1
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+###
+
+POST http://127.0.0.1:8000/api/v1/basket HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+items=[
+  {
+    "product_info": 22,
+    "quantity": 13
+  },
+  {
+    "product_info": 15,
+    "quantity": 12
+  }
+]
+
+
+###
+
+DELETE http://127.0.0.1:8000/api/v1/basket HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+items=2
+
+###
+
+PUT http://127.0.0.1:8000/api/v1/basket HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+items=[{ "id": 2, "quantity": 1} ]
+###
+
+
+###
+
+GET http://127.0.0.1:8000/api/v1/order HTTP/1.1
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+
+
+###
+POST http://127.0.0.1:8000/api/v1/order HTTP/1.1
+Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Content-Type: application/json
+
+{
+"id": "1",
+"contact": "2"}
+
+
+###
+GET http://127.0.0.1:8000/api/v1/partner/state HTTP/1.1
+Authorization: Token c98912e260c13ae1ff9de8997685ae64a8ec14bf
+Content-Type: application/x-www-form-urlencoded
+
+   url = "https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml"
+
+######
+
+GET http://127.0.0.1:8000/api/v1/partner/orders HTTP/1.1
+Authorization: Token c98912e260c13ae1ff9de8997685ae64a8ec14bf
+Content-Type: application/x-www-form-urlencoded
+
+   url = "https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml"
+
+

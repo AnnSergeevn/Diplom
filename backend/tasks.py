@@ -6,18 +6,19 @@ from netology_pd_diplom.celery import app
 from requests import get
 from yaml import load as load_yaml, Loader
 
+
+
 @shared_task
 def send_email(sender, instance, reset_password_token, **kwargs):
     # Your email sending logic here
     return password_reset_token_created(sender, instance, reset_password_token, **kwargs)
 
 
-
 @app.task
 def do_import(url, user_id):
     stream = get(url).content
     data = load_yaml(stream, Loader=Loader)
-    shop, _ = Shop.objects.get_or_create(name=data['shop'], user_id=request.user.id)
+    shop, _ = Shop.objects.get_or_create(name=data['shop'], user_id=user_id)
     for category in data['categories']:
         category_object, _ = Category.objects.get_or_create(id=category['id'], name=category['name'])
         category_object.shops.add(shop.id)

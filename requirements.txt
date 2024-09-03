@@ -9,3 +9,4 @@ ujson~=5.9.0
 pyyaml~=6.0.0
 gunicorn
 django_rest_passwordreset
+django-celery

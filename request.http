@@ -1,15 +1,13 @@
-POST http://localhost:1337/api/v1/user/register 
+POST http://127.0.0.1:1337/api/v1/user/register 
 Content-Type: application/json
 
 {
-   "first_name": "Aleks_3",
+   "first_name": "Aleks_4",
    "last_name": "Star",
-   "email": "Alekssssdd@mail.ru",
+   "email": "test@mail.ru",
    "password": "5aaaaaaaa",
-   "company": "apple",
-   "position": "shop",
-   "type":"shop",
-   "is_active": "True"
+   "company": "asdads",
+   "position": "345345"
 }
 
 ###
@@ -18,7 +16,7 @@ POST http://127.0.0.1:1337/api/v1/user/login
 Content-Type: application/json
 
 {
-   "email":"Alekssss@mail.ru",
+   "email":"test@mail.ru",
    "password": "5aaaaaaaa"
 }
 
@@ -26,44 +24,44 @@ Content-Type: application/json
 
 ###
 
-POST http://127.0.0.1:8000/api/v1/user/register/confirm
+POST http://127.0.0.1:1337/api/v1/user/register/confirm
 Content-Type: application/json
 
 {
-   "email": "Elena.88@mail.ru",
-   "token": "0aa5de7e344e7abf0ba6361b8e743692bc0bff627a4"
+   "email": "test@mail.ru",
+   "token": "2830bddec99554e38bedb641d953d5550"
 }
 
 ###
 
-GET http://127.0.0.1:8000/api/v1/user/details
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+GET http://127.0.0.1:1337/api/v1/user/details
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 
 ###
 
-POST http://127.0.0.1:8000/api/v1/user/details
+POST http://127.0.0.1:1337/api/v1/user/details
 Content-Type: application/json
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 {  
-   "first_name": "Elll",
-   "last_name": "Koll",
-   "email": "Elena.88@mail.ru",
-   "password": "3aaaaaaaa",
+   "first_name": "Aleks_4",
+   "last_name": "Star",
+   "email": "test@mail.ru",
+   "password": "5aaaaaaaa",
    "company": "apple",
    "position": "buyer"  
 }
 
 ###
 
-GET http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+GET http://127.0.0.1:1337/api/v1/user/contact HTTP/1.1
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 ###
 
-POST http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+POST http://127.0.0.1:1337/api/v1/user/contact HTTP/1.1
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 Content-Type: application/json
 
 {
@@ -74,8 +72,8 @@ Content-Type: application/json
 
 ###
 
-DELETE http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+DELETE http://127.0.0.1:1337/api/v1/user/contact HTTP/1.1
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 Content-Type: application/json
 
 {
@@ -85,18 +83,18 @@ Content-Type: application/json
 
 ###
 
-PUT http://127.0.0.1:8000/api/v1/user/contact HTTP/1.1
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+PUT http://127.0.0.1:1337/api/v1/user/contact HTTP/1.1
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 Content-Type: application/json
 
 {
-   "id": "1",
+   "id": "4",
    "city": "Samara"
 }
 
 ###
 
-POST http://127.0.0.1:8000/api/v1/user/password_reset HTTP/1.1
+POST http://127.0.0.1:1337/api/v1/user/password_reset HTTP/1.1
 Content-Type: application/json
 
 {
@@ -107,20 +105,20 @@ Content-Type: application/json
 
 ###
 
-POST http://127.0.0.1:8000/api/v1/user/password_reset/confirm
+POST http://127.0.0.1:1337/api/v1/user/password_reset/confirm
 Content-Type: application/json
 
 {
    "email":"elena.88@mail.ru",
    "password":"2aaaaaaaa3",
-   "token":"42c33f2a99fdf1dd7d5a544d424c97b0caa16c06"
+   "token":"6603cac8753fed8d7d5082a775de32a424a9a9ab"
 }
 
 ###
 
 
-POST http://127.0.0.1:8000/api/v1/partner/update
-Authorization: Token c98912e260c13ae1ff9de8997685ae64a8ec14bf
+POST http://127.0.0.1:1337/api/v1/partner/update
+Authorization: Token d6cb4c30e071594acca758bad1edcbe13c63c7b9
 Content-Type: application/json
 
 {
@@ -129,27 +127,27 @@ Content-Type: application/json
 
 ###
 
-GET http://127.0.0.1:8000/api/v1/categories
+GET http://127.0.0.1:1337/api/v1/categories
 
 ###
 
-GET http://127.0.0.1:8000/api/v1/shops
+GET http://127.0.0.1:1337/api/v1/shops
 
 ###
 
-GET http://127.0.0.1:8000/api/v1/products HTTP/1.1
+GET http://127.0.0.1:1337/api/v1/products HTTP/1.1
 Content-Type: application/json
 
 ###
 
-GET http://127.0.0.1:8000/api/v1/basket HTTP/1.1
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+GET http://127.0.0.1:1337/api/v1/basket HTTP/1.1
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 ###
 
-POST http://127.0.0.1:8000/api/v1/basket HTTP/1.1
+POST http://127.0.0.1:1337/api/v1/basket HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 items=[
   {
@@ -165,17 +163,17 @@ items=[
 
 ###
 
-DELETE http://127.0.0.1:8000/api/v1/basket HTTP/1.1
+DELETE http://127.0.0.1:1337/api/v1/basket HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 items=2
 
 ###
 
-PUT http://127.0.0.1:8000/api/v1/basket HTTP/1.1
+PUT http://127.0.0.1:1337/api/v1/basket HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 items=[{ "id": 2, "quantity": 1} ]
 ###
@@ -183,31 +181,31 @@ items=[{ "id": 2, "quantity": 1} ]
 
 ###
 
-GET http://127.0.0.1:8000/api/v1/order HTTP/1.1
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+GET http://127.0.0.1:1337/api/v1/order HTTP/1.1
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 
 
 ###
-POST http://127.0.0.1:8000/api/v1/order HTTP/1.1
-Authorization: Token e2c36e4e1fb3916aa5ff02b00a67c456ab832018
+POST http://127.0.0.1:1337/api/v1/order HTTP/1.1
+Authorization: Token fa1c6f5e89a60631b428cee94e58cfda4620bc08
 Content-Type: application/json
 
 {
 "id": "1",
-"contact": "2"}
+"contact": "1"}
 
 
 ###
-GET http://127.0.0.1:8000/api/v1/partner/state HTTP/1.1
-Authorization: Token c98912e260c13ae1ff9de8997685ae64a8ec14bf
+GET http://127.0.0.1:1337/api/v1/partner/state HTTP/1.1
+Authorization: Token d6cb4c30e071594acca758bad1edcbe13c63c7b9
 Content-Type: application/x-www-form-urlencoded
 
    url = "https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml"
 
 ######
 
-GET http://127.0.0.1:8000/api/v1/partner/orders HTTP/1.1
-Authorization: Token c98912e260c13ae1ff9de8997685ae64a8ec14bf
+GET http://127.0.0.1:1337/api/v1/partner/orders HTTP/1.1
+Authorization: Token d6cb4c30e071594acca758bad1edcbe13c63c7b9
 Content-Type: application/x-www-form-urlencoded
 
    url = "https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml"

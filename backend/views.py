@@ -26,6 +26,7 @@ from backend.models import Shop, Category, Product, ProductInfo, Parameter, Prod
 from backend.serializers import UserSerializer, CategorySerializer, ShopSerializer, ProductInfoSerializer, \
     OrderItemSerializer, OrderSerializer, ContactSerializer
 from backend.signals import new_user_registered, new_order
+from backend.tasks import do_import
 
 
 
@@ -437,8 +438,7 @@ class PartnerUpdate(APIView):
             except ValidationError as e:
                 return JsonResponse({'Status': False, 'Error': str(e)})
             else:
-                job_params = {'url': url, 'user_id': request.user.id}
-                do_import.delay(job_params)
+                do_import.delay(url, request.user.id)
 
                 return JsonResponse({'Status': True})
 

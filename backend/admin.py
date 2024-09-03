@@ -5,7 +5,7 @@ from backend.models import User, Shop, Category, Product, ProductInfo, Parameter
     Contact, ConfirmEmailToken
 from django.contrib import admin
 from .models import Category, Parameter, ProductParameter, Product, Shop
-from .tasks import do_import
+
 
 
 @admin.register(User)
@@ -69,4 +69,9 @@ class OrderItemAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     pass
+    
+
+@admin.register(ConfirmEmailToken)
+class ConfirmEmailTokenAdmin(admin.ModelAdmin):
+    list_display = ('user', 'key', 'created_at',)
 
